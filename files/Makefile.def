@@ -88,21 +88,11 @@ RELIABILITY = NO_RELIABILITY
 # remove the directory from DIRS.
 
 BASE		= /usr
-FE		= $(HOME)/SRC
+FE		    = $(HOME)/SRC
 
-AMDdir       = $(HOME)/OTHER/AMD
-BLASdir      = $(HOME)/OTHER/BLAS
-CBLASdir     = $(HOME)/OTHER/CBLAS
-LAPACKdir    = $(HOME)/OTHER/LAPACK
-SUPERLUdir   = $(HOME)/OTHER/SuperLU_5.1.1/SRC
-ARPACKdir    = $(HOME)/OTHER/ARPACK
-UMFPACKdir   = $(HOME)/OTHER/UMFPACK
-METISdir     = $(HOME)/OTHER/METIS
-CSPARSEdir   = $(HOME)/OTHER/CSPARSE
-SRCdir       = $(HOME)/SRC
+SRCdir      = $(HOME)/SRC
 
-
-DIRS        = $(AMDdir) $(BLASdir) $(CBLASdir) $(LAPACKdir) $(SUPERLUdir) $(ARPACKdir) $(UMFPACKdir) $(METISdir) $(CSPARSEdir) $(SRCdir)
+DIRS        = $(SRCdir)
 
 # %-------------------------------------------------------%
 # | SECTION 3: LIBRARIES                                  |
@@ -123,31 +113,11 @@ FE_LIBRARY      = $(HOME)/lib/libOpenSees.a
 NDARRAY_LIBRARY = $(HOME)/lib/libndarray.a # BJ_UCD jeremic@ucdavis.edu
 MATMOD_LIBRARY  = $(HOME)/lib/libmatmod.a  # BJ_UCD jeremic@ucdavis.edu
 BJMISC_LIBRARY  = $(HOME)/lib/libBJmisc.a  # BJ_UCD jeremic@ucdavis.edu
-LAPACK_LIBRARY  = $(HOME)/lib/libLapack.a
-BLAS_LIBRARY    = $(HOME)/lib/libBlas.a
-SUPERLU_LIBRARY = $(HOME)/lib/libSuperLU.a
-CBLAS_LIBRARY   = $(HOME)/lib/libCBlas.a
-ARPACK_LIBRARY  = $(HOME)/lib/libArpack.a
-AMD_LIBRARY     = $(HOME)/lib/libAMD.a
-UMFPACK_LIBRARY = $(HOME)/lib/libUmfpack.a
-METIS_LIBRARY   = $(HOME)/lib/libMetis.a
-CSPARSE_LIBRARY = $(HOME)/lib/libCSparse.a
-
-TCL_LIBRARY = /usr/lib64/libtcl8.6.so
-
 BLITZ_LIBRARY = $(HOME)/blitz/lib/libblitz.a
 GRAPHIC_LIBRARY =
 
 # WATCH OUT .. These libraries are removed when 'make wipe' is invoked.
-WIPE_LIBS	= $(FE_LIBRARY) \
-		$(LAPACK_LIBRARY) \
-		$(BLAS_LIBRARY) \
-		$(CBLAS_LIBRARY) \
-		$(SUPERLU_LIBRARY) \
-		$(ARPACK_LIBRARY) \
-		$(UMFPACK_LIBRARY) \
-		$(CSPARSE_LIBRARY) \
-	    $(METIS_LIBRARY)
+WIPE_LIBS	= $(FE_LIBRARY)
 
 # %---------------------------------------------------------%
 # | SECTION 4: COMPILERS                                    |
@@ -160,12 +130,12 @@ WIPE_LIBS	= $(FE_LIBRARY) \
 # Compilers
 CC++	= /usr/bin/g++
 CC      = /usr/bin/gcc
-FC	= /usr/bin/gfortran
+FC	    = /usr/bin/gfortran
 
-AR		= ar 
+AR		    = ar
 ARFLAGS		= cqls
 RANLIB		= ranlib
-RANLIBFLAGS     =
+RANLIBFLAGS =
 
 # Compiler Flags
 #
@@ -193,13 +163,13 @@ else
 
 C++FLAGS         = -Wall -D_LINUX -D_UNIX  -D_TCL85  \
 	$(GRAPHIC_FLAG) $(RELIABILITY_FLAG) $(DEBUG_FLAG) \
-	$(PROGRAMMING_FLAG) -O3 -ffloat-store 
+	$(PROGRAMMING_FLAG) -O3 -ffloat-store
 CFLAGS          = -Wall -O2
-FFLAGS          = -Wall -O -fallow-argument-mismatch
+FFLAGS          = -Wall -O
 
 # Linker
 LINKER          = $(CC++)
-LINKFLAGS       = -rdynamic 
+LINKFLAGS       = -rdynamic
 
 endif
 
@@ -245,7 +215,7 @@ SHELL           = /bin/sh
 .c.o:
 	@$(ECHO) Making $@ from $<
 	$(CC) $(CFLAGS) -c $< -o $@
-.f.o:      
+.f.o:
 	@$(ECHO) Making $@ from $<
 	$(FC) $(FFLAGS) -c $< -o $@
 
@@ -256,18 +226,22 @@ SHELL           = /bin/sh
 # | be linked with when creating executables. These are     |
 # | platform specific and typically order does matter!!     |
 # %---------------------------------------------------------%
-MACHINE_LINKLIBS  = -L$(BASE)/lib64 \
-		-L$(HOME)/lib 
+MACHINE_LINKLIBS = -L$(BASE)/lib64 \
+		-L$(HOME)/lib
 
-MACHINE_NUMERICAL_LIBS  = -lm \
-		$(ARPACK_LIBRARY) \
-		$(SUPERLU_LIBRARY) \
-		$(UMFPACK_LIBRARY) $(CSPARSE_LIBRARY) \
-	    $(LAPACK_LIBRARY) $(BLAS_LIBRARY) $(CBLAS_LIBRARY) \
-		$(AMD_LIBRARY) $(GRAPHIC_LIBRARY)\
-		-ldl -lgfortran 
+MACHINE_NUMERICAL_LIBS = -lm \
+        -larpack \
+        -lsuperlu \
+        -lumfpack \
+        -lcxsparse \
+        -lmetis \
+        -lopenblas \
+        -lamd \
+        -ltcl \
+		$(GRAPHIC_LIBRARY)\
+		-ldl -lgfortran \
 
-MACHINE_SPECIFIC_LIBS = 
+MACHINE_SPECIFIC_LIBS =
 
 
 

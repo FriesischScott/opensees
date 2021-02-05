@@ -1,7 +1,12 @@
-/usr/lib64/libtcl8.6.so
+libamd.so.2
+libarpack.so.2
 libc.so.6
 libdl.so.2
 libgcc_s.so.1
 libgfortran.so.5
 libm.so.6
+libopenblas.so.0
 libstdc++.so.6
+libsuperlu.so.5
+libtcl.so
+libumfpack.so.5
