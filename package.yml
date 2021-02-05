@@ -1,0 +1,26 @@
+name       : opensees
+version    : 3.2.0
+release    : 1
+source     :
+    - https://github.com/OpenSees/OpenSees/archive/v3.2.0.tar.gz : 200f70fc86b7c4c2978eaef1aacd206cb40791fa797e1b9cc51da9633b53eb36
+license    : GPL-2.0-or-later # CHECK ME
+component  : PLEASE FILL ME IN
+summary    : PLEASE FILL ME IN
+description: |
+    PLEASE FILL ME IN
+builddeps  :
+    - pkgconfig(openblas)
+    - pkgconfig(superlu)
+    - pkgconfig(tcl)
+    - arpack-devel
+    - metis-devel
+    - suitesparse-devel
+setup      : |
+    cp $pkgfiles/Makefile.def Makefile.def
+    mkdir -p $workdir/lib
+    mkdir -p $workdir/bin
+build      : |
+    export HOME=$workdir
+    %make
+install    : |
+    install -D bin/OpenSees $installdir/usr/bin/OpenSees
