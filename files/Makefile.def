@@ -91,8 +91,9 @@ BASE		= /usr
 FE		    = $(HOME)/SRC
 
 SRCdir      = $(HOME)/SRC
+CSPARSEdir  = $(HOME)/OTHER/CSPARSE
 
-DIRS        = $(SRCdir)
+DIRS        = $(CSPARSEdir) $(SRCdir)
 
 # %-------------------------------------------------------%
 # | SECTION 3: LIBRARIES                                  |
@@ -113,6 +114,7 @@ FE_LIBRARY      = $(HOME)/lib/libOpenSees.a
 NDARRAY_LIBRARY = $(HOME)/lib/libndarray.a # BJ_UCD jeremic@ucdavis.edu
 MATMOD_LIBRARY  = $(HOME)/lib/libmatmod.a  # BJ_UCD jeremic@ucdavis.edu
 BJMISC_LIBRARY  = $(HOME)/lib/libBJmisc.a  # BJ_UCD jeremic@ucdavis.edu
+CSPARSE_LIBRARY = $(HOME)/lib/libcsparse.a
 BLITZ_LIBRARY = $(HOME)/blitz/lib/libblitz.a
 GRAPHIC_LIBRARY =
 
@@ -233,7 +235,7 @@ MACHINE_NUMERICAL_LIBS = -lm \
         -larpack \
         -lsuperlu \
         -lumfpack \
-        -lcxsparse \
+        $(CSPARSE_LIBRARY) \
         -lmetis \
         -lopenblas \
         -lamd \
